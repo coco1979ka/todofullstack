@@ -1,0 +1,85 @@
+buildscript {
+	repositories {
+		jcenter()
+	}
+
+	dependencies {
+		classpath 'com.bmuschko:gradle-cargo-plugin:2.7.1'
+	}
+}
+
+plugins {
+	id 'org.springframework.boot' version '2.4.0'
+	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id 'org.asciidoctor.convert' version '1.5.8'
+	id 'com.bmuschko.cargo' version '2.7.1'
+	id 'java'
+	id 'war'
+}
+
+group = 'com.logmein'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+	set('snippetsDir', file("build/generated-snippets"))
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.jetbrains:annotations:19.0.0'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	providedRuntime 'com.h2database:h2'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+	def cargoVersion = '1.8.2'
+	cargo "org.codehaus.cargo:cargo-core-uberjar:$cargoVersion",
+			"org.codehaus.cargo:cargo-licensed-dtds:$cargoVersion",
+			"org.codehaus.cargo:cargo-ant:$cargoVersion"
+}
+
+test {
+	outputs.dir snippetsDir
+	useJUnitPlatform()
+}
+
+asciidoctor {
+	inputs.dir snippetsDir
+	dependsOn test
+}
+
+war {
+	enabled true
+}
+
+cargo {
+	containerId = 'tomcat9x'
+	port 8080
+
+	deployable {
+		context = '/'
+	}
+
+	local {
+		installer {
+			installUrl = 'https://ftp.fau.de/apache/tomcat/tomcat-9/v9.0.41/bin/apache-tomcat-9.0.41.zip'
+			downloadDir = file("$buildDir/download")
+			extractDir = file("$buildDir/extract")
+		}
+	}
+}

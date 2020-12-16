@@ -1,0 +1,72 @@
+{
+  "name": "todoapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
+    "server": "cd ../server && sh gradlew :bootRun",
+    "client": "PORT=3000 react-scripts start",
+    "build": "react-scripts build",
+    "prod": "react-scripts build && nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
+    "cy:run": "cypress run",
+    "e2e:local": "start-server-and-test server http://localhost:8080/api/tasks client http-get://localhost:3000 cy:run"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=12.18.3"
+  },
+  "dependencies": {
+    "@ionic/react": "^5.4.0",
+    "@types/styled-components": "^5.1.4",
+    "@types/uuid": "^8.3.0",
+    "axios": "^0.20.0",
+    "body-parser": "1.19.0",
+    "express": "4.17.1",
+    "morgan": "1.10.0",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
+    "react-hook-form": "^6.11.0",
+    "styled-components": "^5.2.1",
+    "swr": "^0.3.8",
+    "uuid": "^8.3.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.15",
+    "@types/node": "^14.14.0",
+    "@types/react": "^16.9.53",
+    "@types/react-dom": "^16.9.8",
+    "@typescript-eslint/eslint-plugin": "^2.34.0",
+    "@typescript-eslint/parser": "^2.34.0",
+    "concurrently": "^5.3.0",
+    "cypress": "^5.5.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.14.0",
+    "eslint-config-standard": "^15.0.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-standard": "^4.0.2",
+    "nodemon": "2.0.4",
+    "prettier": "^2.1.2",
+    "react-scripts": "^3.4.4",
+    "start-server-and-test": "^1.11.6",
+    "typescript": "^4.0.3"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
