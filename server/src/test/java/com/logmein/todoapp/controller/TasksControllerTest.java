@@ -92,7 +92,8 @@ public class TasksControllerTest {
     @Test
     void canDeleteExistingTask() throws Exception {
         this.mockMvc.perform(delete("/api/tasks/3"))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andDo(document("delete-task"));
         Mockito.verify(taskService).deleteTask("3");
     }
 

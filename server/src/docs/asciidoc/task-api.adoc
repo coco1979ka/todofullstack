@@ -1,0 +1,21 @@
+== Task API Guide
+
+=== Listing all tasks
+List all tasks of a user.
+
+operation::get-tasks[]
+
+=== Add a new task
+Create a new task.
+
+operation::create-task[]
+
+=== Delete a task
+Delete an existing task.
+
+operation::delete-task[]
+
+=== Update a task
+Update an existing task.
+
+operation::update-existing-task[]

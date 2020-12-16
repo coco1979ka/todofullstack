@@ -1,15 +1,13 @@
 package com.logmein.todoapp.controller;
 
-import com.logmein.todoapp.model.Task;
 import com.logmein.todoapp.service.TaskService;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.extern.java.Log;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Log
@@ -25,6 +23,7 @@ public class TasksController {
         this.taskService = taskService;
     }
 
+    @ApiResponse(ref="#/components/responses/tasks")
     @GetMapping("/tasks")
     public Map<String, TaskDTO> getTasks() {
         return taskService.getAllTasks();

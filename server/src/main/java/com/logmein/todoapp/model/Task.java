@@ -23,5 +23,6 @@ public class Task {
 
     String text;
 
+    @Builder.Default
     Boolean done = false;
 }
